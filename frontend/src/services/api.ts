@@ -110,4 +110,62 @@ export const del = async <T = any>(url: string): Promise<T> => {
   return response.data;
 };
 
+// ---- News API ----
+
+export interface NewsArticle {
+  id: number;
+  title: string;
+  description: string;
+  content?: string;
+  source: string;
+  author: string;
+  url: string;
+  image_url: string;
+  category: string;
+  sentiment: string;
+  keywords: string[];
+  importance_score: number;
+  published_at: string;
+  collected_at?: string;
+}
+
+export interface NewsListResponse {
+  total: number;
+  page: number;
+  page_size: number;
+  total_pages: number;
+  data: NewsArticle[];
+}
+
+export interface NewsCategory {
+  name: string;
+  count: number;
+}
+
+export const fetchNewsList = async (params: {
+  category?: string;
+  keyword?: string;
+  page?: number;
+  page_size?: number;
+  sort_by?: string;
+}): Promise<NewsListResponse> => {
+  const response = await apiClient.get('/api/news', { params });
+  return response.data;
+};
+
+export const fetchNewsDetail = async (newsId: number): Promise<NewsArticle> => {
+  const response = await apiClient.get(`/api/news/${newsId}`);
+  return response.data;
+};
+
+export const fetchNewsCategories = async (): Promise<{ data: NewsCategory[] }> => {
+  const response = await apiClient.get('/api/news/categories');
+  return response.data;
+};
+
+export const triggerNewsCollection = async (): Promise<{ status: string; collected: number }> => {
+  const response = await apiClient.post('/api/news/collect');
+  return response.data;
+};
+
 export default apiClient;

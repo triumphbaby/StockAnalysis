@@ -117,7 +117,7 @@ class StockPrice(Base):
         return {
             "id": self.id,
             "stock_code": self.stock_code,
-            "trade_date": self.trade_date.isoformat() if self.trade_date else None,
+            "trade_date": self.trade_date.strftime('%Y%m%d') if self.trade_date else None,
             "open": self.open,
             "high": self.high,
             "low": self.low,
