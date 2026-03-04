@@ -1,0 +1,157 @@
+/* ========================================
+   Stock Search Component Styles
+   Single-border design: only .ant-input-affix-wrapper has visible border
+   ======================================== */
+
+.stock-search-container {
+  position: relative;
+  width: 100%;
+}
+
+/* ---- Strip border from AutoComplete's .ant-select-selector ---- */
+.stock-search-container .ant-select-selector {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* ---- The ONLY visible border layer: .ant-input-affix-wrapper ---- */
+.stock-search-container .ant-input-affix-wrapper {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 12px 16px;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stock-search-container .ant-input-affix-wrapper:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.2);
+}
+
+.stock-search-container .ant-input-affix-wrapper-focused {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2), 0 4px 16px rgba(24, 144, 255, 0.3) !important;
+}
+
+/* ---- Strip border from inner .ant-input ---- */
+.stock-search-container .ant-input {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--color-text-primary) !important;
+  font-size: 16px;
+}
+
+.stock-search-container .ant-input:focus {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.stock-search-container .ant-input::placeholder {
+  color: var(--color-text-tertiary) !important;
+}
+
+.stock-search-container .ant-input-prefix {
+  margin-right: 12px;
+  color: var(--color-text-secondary);
+  font-size: 18px;
+}
+
+.stock-search-container .ant-input-clear-icon {
+  color: var(--color-text-secondary) !important;
+  font-size: 14px;
+  transition: all var(--transition-fast);
+}
+
+.stock-search-container .ant-input-clear-icon:hover {
+  color: var(--color-primary) !important;
+  transform: scale(1.1);
+}
+
+/* ---- Strip any .ant-select focused/open state borders ---- */
+.stock-search-container .ant-select-focused .ant-select-selector {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.stock-search-container .ant-select-open .ant-select-selector {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ========================================
+   Dropdown Menu Styles
+   ======================================== */
+
+.stock-search-dropdown {
+  z-index: 1050;
+}
+
+.stock-search-dropdown .rc-virtual-list {
+  max-height: 320px;
+}
+
+.stock-search-dropdown .ant-select-item {
+  border-radius: var(--radius-sm);
+  margin: 2px 4px;
+  transition: all var(--transition-fast);
+}
+
+.stock-search-dropdown .ant-select-item-option-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+}
+
+.stock-search-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background: rgba(24, 144, 255, 0.12) !important;
+  transform: translateX(4px);
+}
+
+.stock-search-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background: rgba(24, 144, 255, 0.25) !important;
+  font-weight: 600;
+}
+
+/* ========================================
+   Loading & Empty States
+   ======================================== */
+
+.stock-search-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  color: var(--color-text-secondary);
+}
+
+.stock-search-empty {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: var(--color-text-tertiary);
+  font-size: 14px;
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 768px) {
+  .stock-search-container .ant-input-affix-wrapper {
+    padding: 10px 14px;
+  }
+
+  .stock-search-container .ant-input {
+    font-size: 14px;
+  }
+
+  .stock-search-dropdown .rc-virtual-list {
+    max-height: 240px;
+  }
+}
