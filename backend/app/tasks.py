@@ -30,9 +30,9 @@ celery_app.conf.update(
 
 # Periodic task schedule
 celery_app.conf.beat_schedule = {
-    'collect-news-every-5-minutes': {
+    'collect-news-every-30-minutes': {
         'task': 'app.tasks.collect_global_news',
-        'schedule': 300.0,  # 5 minutes
+        'schedule': settings.NEWS_FETCH_INTERVAL,  # 30 minutes
     },
     'update-stock-prices-every-minute': {
         'task': 'app.tasks.fetch_realtime_prices',
@@ -48,15 +48,24 @@ celery_app.conf.beat_schedule = {
 @celery_app.task(name='app.tasks.collect_global_news')
 def collect_global_news():
     """
-    Collect global stock market news
-    This is a placeholder - will be implemented in Iteration 3
+    Collect financial news from NewsAPI.org.
+    Runs every 30 minutes via Celery Beat.
     """
-    logger.info("Starting global news collection task...")
+    logger.info("Starting news collection task...")
 
     try:
-        # TODO: Implement news collection logic
-        logger.info("News collection task completed successfully")
-        return {"status": "success", "message": "News collection not yet implemented"}
+        from app.database import SessionLocal
+        from app.services.news_service import NewsService
+
+        db = SessionLocal()
+        try:
+            service = NewsService(db)
+            count = service.collect_and_store()
+            logger.info(f"News collection completed: {count} new articles")
+            return {"status": "success", "collected": count}
+        finally:
+            db.close()
+
     except Exception as e:
         logger.error(f"Error in news collection task: {e}")
         return {"status": "error", "message": str(e)}
@@ -100,7 +109,6 @@ def generate_morning_briefing():
 def process_news_item(news_id: int):
     """
     Process a single news item (summarize, classify, score)
-    This is a placeholder - will be implemented in Iteration 3
 
     Args:
         news_id: ID of the news article to process
@@ -108,7 +116,7 @@ def process_news_item(news_id: int):
     logger.info(f"Processing news item {news_id}...")
 
     try:
-        # TODO: Implement news processing logic
+        # TODO: Implement single-item processing with AI classifier
         logger.info(f"News item {news_id} processed successfully")
         return {"status": "success", "news_id": news_id}
     except Exception as e:

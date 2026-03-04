@@ -12,6 +12,7 @@ from datetime import datetime
 
 from app.config import settings
 from app.database import engine, Base
+from app.models import stock, news  # noqa: F401 - ensure models registered for table creation
 
 # Configure logging
 logging.basicConfig(
@@ -172,10 +173,10 @@ async def websocket_notifications(websocket: WebSocket):
 
 
 # Import and include routers
-from app.api import stocks
+from app.api import stocks, news
 
 app.include_router(stocks.router, prefix="/api/stocks", tags=["Stocks"])
-# app.include_router(news.router, prefix="/api/news", tags=["News"])  # TODO: Iteration 3
+app.include_router(news.router, prefix="/api/news", tags=["News"])
 # app.include_router(reports.router, prefix="/api/reports", tags=["Reports"])  # TODO: Iteration 6
 
 

@@ -11,10 +11,12 @@ import {
   HomeOutlined,
   BarChartOutlined,
   RocketOutlined,
+  ReadOutlined,
 } from '@ant-design/icons';
 import './App.css';
 import { fetchAPIInfo, fetchHealthCheck } from './services/api';
 import StockAnalysisPage from './pages/StockAnalysisPage';
+import NewsPage from './pages/NewsPage';
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text, Paragraph } = Typography;
@@ -145,23 +147,25 @@ const HomePage: React.FC<{ apiInfo: APIInfo | null; healthStatus: HealthStatus |
                   </Link>
                 </Col>
                 <Col xs={24} sm={12} md={8}>
-                  <Card
-                    className="glass-card"
-                    size="small"
-                    hoverable
-                    style={{ textAlign: 'center', height: '100%', opacity: 0.7 }}
-                  >
-                    <LineChartOutlined style={{ fontSize: '56px', color: '#52c41a', marginBottom: '8px' }} />
-                    <Title level={4} style={{ marginTop: '16px', marginBottom: '8px' }}>
-                      智能分析
-                    </Title>
-                    <Text type="secondary">
-                      技术面、基本面、综合评分
-                    </Text>
-                    <div style={{ marginTop: '12px' }}>
-                      <Tag color="warning">开发中</Tag>
-                    </div>
-                  </Card>
+                  <Link to="/news" style={{ textDecoration: 'none' }}>
+                    <Card
+                      className="glass-card glow-effect"
+                      size="small"
+                      hoverable
+                      style={{ textAlign: 'center', height: '100%', position: 'relative', overflow: 'hidden' }}
+                    >
+                      <ReadOutlined style={{ fontSize: '56px', color: '#52c41a', marginBottom: '8px' }} />
+                      <Title level={4} style={{ marginTop: '16px', marginBottom: '8px' }}>
+                        财经资讯
+                      </Title>
+                      <Text type="secondary">
+                        实时新闻、分类浏览、智能筛选
+                      </Text>
+                      <div style={{ marginTop: '12px' }}>
+                        <Tag color="success">已上线</Tag>
+                      </div>
+                    </Card>
+                  </Link>
                 </Col>
                 <Col xs={24} sm={12} md={8}>
                   <Card
@@ -252,6 +256,7 @@ const AppContent: React.FC = () => {
 
   const getSelectedKey = () => {
     if (location.pathname === '/analysis') return 'analysis';
+    if (location.pathname === '/news') return 'news';
     return 'home';
   };
 
@@ -277,6 +282,9 @@ const AppContent: React.FC = () => {
             <Menu.Item key="analysis" icon={<BarChartOutlined />}>
               <Link to="/analysis">股票分析</Link>
             </Menu.Item>
+            <Menu.Item key="news" icon={<ReadOutlined />}>
+              <Link to="/news">资讯</Link>
+            </Menu.Item>
           </Menu>
         </div>
       </Header>
@@ -284,6 +292,7 @@ const AppContent: React.FC = () => {
       <Routes>
         <Route path="/" element={<HomePage apiInfo={apiInfo} healthStatus={healthStatus} loading={loading} />} />
         <Route path="/analysis" element={<StockAnalysisPage />} />
+        <Route path="/news" element={<NewsPage />} />
       </Routes>
 
       <Footer>

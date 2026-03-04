@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str = ""
     TUSHARE_TOKEN: str = ""
     ALPHA_VANTAGE_API_KEY: str = ""
+    NEWS_API_KEY: str = ""
 
     # Security
     SECRET_KEY: str = "dev_secret_key_change_in_production"
@@ -49,9 +50,10 @@ class Settings(BaseSettings):
     CACHE_TTL_MEDIUM: int = 1800  # 30 minutes
     CACHE_TTL_LONG: int = 3600  # 1 hour
 
-    # News Scraping
-    NEWS_FETCH_INTERVAL: int = 300  # 5 minutes
+    # News
+    NEWS_FETCH_INTERVAL: int = 1800  # 30 minutes
     NEWS_MAX_IMPACT_SCORE: int = 100
+    NEWS_API_DAILY_LIMIT: int = 100  # NewsAPI.org free tier
 
     # Report Generation
     REPORT_TEMPLATES_DIR: str = "app/templates/reports"
